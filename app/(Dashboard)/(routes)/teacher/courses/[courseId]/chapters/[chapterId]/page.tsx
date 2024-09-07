@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
 import { IconBadge } from "@/components/Iconbadge";
+import { ChapterVideoForm } from "../_components/ChapterVideoForm";
 import ChapterTitleForm from "../_components/ChapterTitleForm";
 import ChapterDescriptionForm from "../_components/ChapterDescription";
 import ChapterAccessForm from "../_components/ChapterAccessForm";
@@ -100,6 +101,11 @@ async function page({
             <IconBadge icon={Video} />
             <h2 className="text-xl">Add a video</h2>
           </div>
+          <ChapterVideoForm
+            initialData={chapter}
+            courseId={courseId}
+            chapterId={chapterId}
+          />
         </div>
       </div>
     </div>

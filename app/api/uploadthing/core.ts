@@ -22,7 +22,7 @@ export const ourFileRouter = {
       console.log("Upload complete ");
     }),
 
-  courseVideo: f({ video: { maxFileSize: "1GB", maxFileCount: 1 } })
+  chapterVideo: f({ video: { maxFileSize: "1GB", maxFileCount: 1 } })
     .middleware(() => handleAuth())
     .onUploadComplete(() => {
       console.log("Upload complete ");
