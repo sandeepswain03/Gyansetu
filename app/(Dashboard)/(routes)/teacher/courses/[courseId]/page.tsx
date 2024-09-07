@@ -15,6 +15,7 @@ import { AttachmentForm } from "./_components/AttachmentForm";
 import { PriceForm } from "./_components/PriceForm";
 import TitleForm from "./_components/TitleForm";
 import DescriptionForm from "./_components/DescriptionForm";
+import ChaptersForm from "./_components/ChaptersForm";
 
 const page = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth();
@@ -25,8 +26,14 @@ const page = async ({ params }: { params: { courseId: string } }) => {
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
+      userId,
     },
     include: {
+      chapters: {
+        orderBy: {
+          position: "asc",
+        },
+      },
       attachments: {
         orderBy: {
           createdAt: "desc",
@@ -51,6 +58,7 @@ const page = async ({ params }: { params: { courseId: string } }) => {
     course.imageUrl,
     course.price,
     course.categoryId,
+    course.chapters.some((chapter) => chapter.isPublished),
   ];
 
   const totalFields = requiredFields.length; //total number of fields
@@ -95,7 +103,9 @@ const page = async ({ params }: { params: { courseId: string } }) => {
               <IconBadge icon={ListChecks} />
               <h2 className="text-xl">Course chapters</h2>
             </div>
-            <div>{/* TODO: Chapter list */}</div>
+            <div>
+              <ChaptersForm initialData={course} courseId={course.id} />
+            </div>
           </div>
           {/* Price Form */}
           <div>
