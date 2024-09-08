@@ -9,6 +9,7 @@ generator client {
   previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
+
 model Course {
   id          String  @id @default(uuid())
   userId      String
@@ -124,7 +125,7 @@ model RazorpayCustomer {
   razorpaypaymentid String   @default("")
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
-  Course            Course   @relation(fields: [courseId], references: [id])
+  Course            Course   @relation(fields: [courseId], references: [id],onDelete: Cascade)
 
   @@index([userId])
   @@index([courseId])

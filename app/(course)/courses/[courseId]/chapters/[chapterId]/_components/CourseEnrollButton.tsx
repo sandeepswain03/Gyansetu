@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
-import Razorpay from "razorpay";
+import { useRouter } from "next/navigation";
 
 interface CourseEnrollButtonProps {
   price: number;
@@ -16,9 +16,10 @@ interface CourseEnrollButtonProps {
 export const CourseEnrollButton = ({
   price,
   courseId,
+  
 }: CourseEnrollButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
-
+  const router = useRouter();
   const onClick = async () => {
     try {
       setIsLoading(true);
@@ -35,17 +36,18 @@ export const CourseEnrollButton = ({
         name: "GyanSetu",
         description: "Learning Management System Course Enrollment",
         order_id: orderId, // Order ID from backend
-        handler: function (response: any) {
+        handler: async function (response: any) {
           // Handle payment success
-          toast.success("Payment successful!");
           // Optionally, send payment details to your backend for verification
-          axios.post("/api/paymentverify", {
+          await axios.post("/api/paymentverify", {
             orderId: orderId,
             razorpay_order_id: orderId,
-            courseId:courseId,
+            courseId: courseId,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
           });
+          router.push("/mycourses");
+          toast.success("Payment successful!");
         },
         prefill: {
           name: "Customer Name",
@@ -58,6 +60,7 @@ export const CourseEnrollButton = ({
 
       const paymentObject = new (window as any).Razorpay(options);
       const model = await paymentObject.open();
+      
     } catch {
       toast.error("Something went wrong");
     } finally {

@@ -41,7 +41,7 @@ export async function DELETE(
     }
 
     const course = await db.course.findUnique({
-      where: {
+      where: {  
         id: courseId,
         userId: userId as string,
       },
