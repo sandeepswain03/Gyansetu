@@ -1,3 +1,4 @@
+
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { File } from "lucide-react";
@@ -36,10 +37,13 @@ const ChapterIdPage = async ({
   if (!chapter || !course) {
     return redirect("/");
   }
-
+  
   const isLocked = !chapter.isFree && !purchase;
   const completeOnEnd = !!purchase && !userProgress?.isCompleted;
-
+  
+  if(!course){
+    return <div>Loading</div>
+  }
   return (
     <div>
       {userProgress?.isCompleted && (
