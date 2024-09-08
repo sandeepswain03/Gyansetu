@@ -21,7 +21,7 @@ const formSchema = z.object({
 
 export const AttachmentForm = ({
   initialData,
-  courseId,
+  courseId, 
 }: AttachmentFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -29,6 +29,9 @@ export const AttachmentForm = ({
   const router = useRouter();
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+
+    console.log(values);
+    
     try {
       const response = await axios.post(`/api/courses/${courseId}/attachments`, values);
       toast.success("Attachment uploaded successfully");
@@ -110,9 +113,10 @@ export const AttachmentForm = ({
         <div>
           <FileUpload
             endpoint="courseAttachment"
-            onChange={(url?: string, originalFilename?: string) => {
-              if (url && originalFilename) {
-                onSubmit({ url, originalFilename });
+            onChange={(url?: string) => {
+              console.log(url);
+              if (url) {
+                onSubmit({ url, originalFilename: url });
               }
             }}
           />

@@ -21,9 +21,10 @@ model Course {
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
 
-  attachments Attachment[]
-  chapters    Chapter[]
-  Purchase    Purchase[]
+  attachments      Attachment[]
+  chapters         Chapter[]
+  Purchase         Purchase[]
+  RazorpayCustomer RazorpayCustomer[] // Added opposite relation field
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -110,4 +111,21 @@ model StripeCustomer {
   updatedAt DateTime @updatedAt
 
   @@index([userId])
+}
+
+model RazorpayCustomer {
+  id        String   @id @default(uuid())
+  orderId   String   @unique
+  userId    String
+  courseId  String
+  amount    Int
+  currency  String
+  status    String
+  razorpaypaymentid String @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Course Course @relation(fields: [courseId], references: [id])
+
+  @@index([userId])
+  @@index([courseId])
 }
