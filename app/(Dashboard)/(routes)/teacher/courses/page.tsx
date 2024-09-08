@@ -1,15 +1,35 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
-function page() {
+import { DataTable } from "./_components/data-table";
+import { columns } from "./_components/columns";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { db } from "@/lib/db";
+
+const CoursesPage = async () => {
+  const userId = auth();
+
+  if (!userId) {
+    return redirect("/");
+  }
+
+  // Remove the getToken property from the userId object.
+  const { getToken, ...userIdWithoutToken } = userId;
+
+  const courses = await db.course.findMany({
+    where: {
+      // @ts-ignore
+      userId: userIdWithoutToken.userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
   return (
-    <div>
-      <Link href="/teacher/create">
-        <Button>New Course</Button>
-      </Link>
+    <div className="p-6">
+      <DataTable columns={columns} data={courses} />
     </div>
   );
-}
+};
 
-export default page;
+export default CoursesPage;
