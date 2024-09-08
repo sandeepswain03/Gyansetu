@@ -35,13 +35,14 @@ export const CourseEnrollButton = ({
         name: "GyanSetu",
         description: "Learning Management System Course Enrollment",
         order_id: orderId, // Order ID from backend
-        handler: function (response:any) {
+        handler: function (response: any) {
           // Handle payment success
           toast.success("Payment successful!");
           // Optionally, send payment details to your backend for verification
-          axios.post('/api/paymentverify', {
-            orderId:orderId,
+          axios.post("/api/paymentverify", {
+            orderId: orderId,
             razorpay_order_id: orderId,
+            courseId:courseId,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
           });
@@ -59,7 +60,6 @@ export const CourseEnrollButton = ({
       const model = await paymentObject.open();
     } catch {
       toast.error("Something went wrong");
-      
     } finally {
       setIsLoading(false);
     }
@@ -74,5 +74,5 @@ export const CourseEnrollButton = ({
     >
       Enroll for {formatPrice(price)}
     </Button>
-  )
-}
+  );
+};

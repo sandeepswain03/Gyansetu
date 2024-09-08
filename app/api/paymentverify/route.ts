@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature,orderId,userId } = await req.json();
+        const { razorpay_order_id, razorpay_payment_id, razorpay_signature,orderId,courseId } = await req.json();
         const body = razorpay_order_id + "|" + razorpay_payment_id;
 
         const expectedSignature = crypto
@@ -18,6 +18,9 @@ export async function POST(req: NextRequest) {
             .update(body.toString())
             .digest("hex");
 
+        console.log(expectedSignature);
+        console.log(razorpay_payment_id);
+        
         const isAuthentic = expectedSignature === razorpay_signature;
         if (isAuthentic) {
              // Update the status to 'paid'
@@ -30,6 +33,15 @@ export async function POST(req: NextRequest) {
           status: "paid",
         },
       });
+
+      const data =   await db.purchase.create({
+        data: {
+          courseId: courseId,
+          userId: user.id!,
+        }
+      });
+      
+
         } else {
             return NextResponse.json({
                 message: "fail"
@@ -45,6 +57,7 @@ export async function POST(req: NextRequest) {
         })
 
     } catch (error: any) {
+        console.log(error)
         return NextResponse.json({ error: error.message }, { status: 400 });
     }
 }
