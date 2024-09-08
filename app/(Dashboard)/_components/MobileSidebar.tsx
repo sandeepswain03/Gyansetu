@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import Sidebar from "./Sidebar";
 
 function MobileSidebar() {
@@ -10,7 +10,9 @@ function MobileSidebar() {
         <Menu />
       </SheetTrigger>
       <SheetContent side="left" className="p-0 bg-white">
-        <Sidebar />
+        <SheetClose asChild>
+          <Sidebar />
+        </SheetClose>
       </SheetContent>
     </Sheet>
   );

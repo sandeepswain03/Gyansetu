@@ -27,9 +27,6 @@ async function page({
       id: chapterId,
       courseId: courseId,
     },
-    include: {
-      muxData: true,
-    },
   });
 
   if (!chapter) {
