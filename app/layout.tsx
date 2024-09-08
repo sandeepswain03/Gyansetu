@@ -25,6 +25,7 @@ export default function RootLayout({
           <ConfettiProvider />
           <ToasterProvider />
         </body>
+
         <Script src="https://checkout.razorpay.com/v1/checkout.js" />
 
       </html>
