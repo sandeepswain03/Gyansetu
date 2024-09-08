@@ -39,7 +39,7 @@ export const getCourses = async ({
         createdAt: "desc",
       },
     });
-
+    
     const coursesWithProgress: CourseWithProgressWithCategory[] =
       await Promise.all(
         courses.map(async (course) => {
@@ -65,3 +65,19 @@ export const getCourses = async ({
     return [];
   }
 };
+
+export async function getUnpurchasedCourses(userId: string) {
+  const courses = await db.course.findMany({
+    where: {
+      NOT: {
+        Purchase: {
+          some: {
+            userId: userId
+          }
+        }
+      }
+    }
+  });
+
+  return courses;
+}

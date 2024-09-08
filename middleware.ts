@@ -13,8 +13,7 @@ export default clerkMiddleware(async (auth, req) => {
   let user;
   if (data.userId) {
     try {
-      user = await clerkClient.users.getUser(data.userId); // Correct method is `getUser`
-      console.log(user.publicMetadata.role);
+      user = await clerkClient.users.getUser(data.userId); 
       await clerkClient.users.updateUser(data.userId, {
         publicMetadata: {
           role:user.publicMetadata.role
