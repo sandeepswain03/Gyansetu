@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 const CourseIdPage = async ({
@@ -6,6 +7,8 @@ const CourseIdPage = async ({
 }: {
   params: { courseId: string; }
 }) => {
+
+  const { userId } = auth();
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
@@ -21,7 +24,7 @@ const CourseIdPage = async ({
       }
     }
   });
-
+  
   if (!course) {
     return redirect("/");
   }

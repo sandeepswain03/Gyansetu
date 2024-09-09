@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Layout, Compass, List, BarChart } from "lucide-react";
+import { Layout, Compass, List, BarChart, UserRoundSearch  } from "lucide-react";
 import SideBarItem from "./SideBarItem";
 import { usePathname } from "next/navigation";
 
@@ -15,6 +15,11 @@ const guestRoutes = [
     label: "Browse",
     href: "/search",
   },
+  {
+    icon: UserRoundSearch,
+    label: "Community",
+    href: "/community",
+  }
 ];
 
 const teacherRoutes = [

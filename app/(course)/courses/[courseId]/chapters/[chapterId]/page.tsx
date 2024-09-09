@@ -1,4 +1,3 @@
-
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { File } from "lucide-react";
@@ -21,28 +20,22 @@ const ChapterIdPage = async ({
     return redirect("/");
   }
 
-  const {
-    chapter,
-    course,
-    attachments,
-    nextChapter,
-    userProgress,
-    purchase,
-  } = await getChapter({
-    userId,
-    chapterId: params.chapterId,
-    courseId: params.courseId,
-  });
+  const { chapter, course, attachments, nextChapter, userProgress, purchase } =
+    await getChapter({
+      userId,
+      chapterId: params.chapterId,
+      courseId: params.courseId,
+    });
 
   if (!chapter || !course) {
     return redirect("/");
   }
-  
+
   const isLocked = !chapter.isFree && !purchase;
   const completeOnEnd = !!purchase && !userProgress?.isCompleted;
-  
-  if(!course){
-    return <div>Loading</div>
+
+  if (!course) {
+    return <div>Loading</div>;
   }
   return (
     <div>

@@ -88,7 +88,6 @@ export const VideoPlayer = ({
           width="100%"
           height="100%"
           controls
-          playing
           onReady={() => setIsReady(true)}
           onEnded={onEnd}
           config={{
