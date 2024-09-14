@@ -46,7 +46,7 @@ export const CourseEnrollButton = ({
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
           });
-          router.push("/mycourses");
+          router.push("/");
           toast.success("Payment successful!");
         },
         prefill: {
