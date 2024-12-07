@@ -7,6 +7,11 @@ export async function DELETE(
   { params }: { params: { courseId: string; attachmentId: string } }
 ) {
   try {
+    if (!params.courseId || !params.attachmentId) {
+      return new Response(JSON.stringify({ error: 'Missing parameters' }), { status: 400 });
+    }
+
+
     const { userId } = auth();
 
     if (!userId) {
