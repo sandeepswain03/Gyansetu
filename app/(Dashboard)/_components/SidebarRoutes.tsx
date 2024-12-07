@@ -14,11 +14,6 @@ const guestRoutes = [
     icon: Compass,
     label: "Browse",
     href: "/search",
-  },
-  {
-    icon: UserRoundSearch,
-    label: "Community",
-    href: "/community",
   }
 ];
 
