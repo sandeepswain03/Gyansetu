@@ -1,3 +1,7 @@
+![image_alt](https://github.com/sandeepswain03/Gyansetu/blob/28cb63e54880b7223b786105377263719c36f3c9/Gyansetu.png)
+
+
+#Gyansetu
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
